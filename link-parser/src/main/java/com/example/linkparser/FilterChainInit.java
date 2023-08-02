@@ -1,30 +1,30 @@
 package com.example.linkparser;
 
-import com.example.linkparser.model.NameWebsite;
+
+import com.example.linkparser.model.answer.AbstractAnswer;
 import com.example.linkparser.parser.AbstractParser;
-import com.example.linkparser.parser.GithubParser;
-import com.example.linkparser.parser.StackoverflowParser;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+@Component
+@RequiredArgsConstructor
 public class FilterChainInit {
 
-    public static void iter(List<AbstractParser> abstractParsers, String url){
-        for (AbstractParser abstractParser : abstractParsers.subList(0, abstractParsers.size()-1)){
-            for(AbstractParser abstractParser1 : abstractParsers.subList(1, abstractParsers.size())){
-                abstractParser.setNextAbstractParser(abstractParser1);
-            }
-        }
-        abstractParsers.get(0).parserManager(url);
+    private final List<AbstractParser> abstractParsers;
+
+    public @Nullable AbstractAnswer init(@NotNull String url){
+        return abstractParsers.stream()
+                .map(abstractParser -> abstractParser.parserManager(url))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
     }
 
-    public static void init(String url){
-        List<AbstractParser> abstractParsers = new ArrayList<>();
-        GithubParser githubParser = new GithubParser(NameWebsite.github);
-        StackoverflowParser stackoverflowParser = new StackoverflowParser(NameWebsite.stackoverflow);
-        abstractParsers.add(githubParser);
-        abstractParsers.add(stackoverflowParser);
-        iter(abstractParsers, url);
-    }
+
+
 }
