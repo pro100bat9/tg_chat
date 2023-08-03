@@ -9,6 +9,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class GithubWebClientImpl implements GithubWebClient {
     private final WebClient webClient;
     private final String url;
+    private final static String BASE_URL = "https://api.github.com/repos/";
+
+    public GithubWebClientImpl(WebClient webClient) {
+        this.webClient = webClient;
+        this.url = BASE_URL;
+    }
 
     @Override
     public GithubApiResponse fetchRepository(String userName, String repository) {

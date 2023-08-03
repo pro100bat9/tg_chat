@@ -5,6 +5,8 @@ server:
   port: 8080
 app:
   test: 1234
+  scheduler:
+    interval: 10000
 github:
   url: "https://api.github.com/repos/"
 stackoverflow:
