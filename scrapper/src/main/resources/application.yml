@@ -5,3 +5,10 @@ server:
   port: 8080
 app:
   test: 1234
+github:
+  url: "https://api.github.com/repos/"
+stackoverflow:
+  url: "https://api.stackexchange.com/2.3/questions/"
+  mandatory-request-params: "?order=desc&sort=activity&site=stackoverflow"
+webclient:
+  timeout: 1000
