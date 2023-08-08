@@ -5,11 +5,15 @@ import com.example.scrapper.dto.response.GithubApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@RequiredArgsConstructor
 public class GithubWebClientImpl implements GithubWebClient {
     private final WebClient webClient;
     private final String url;
     private final static String BASE_URL = "https://api.github.com/repos/";
+
+    public GithubWebClientImpl(WebClient webClient, String url) {
+        this.webClient = webClient;
+        this.url = url;
+    }
 
     public GithubWebClientImpl(WebClient webClient) {
         this.webClient = webClient;
