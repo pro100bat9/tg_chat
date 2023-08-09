@@ -45,6 +45,6 @@ public class ListCommand extends AbstractCommand{
                 .map(LinkResponse::url)
                 .map(URI::toString)
                 .toList();
-        return "List of your tracked links" + response.toString();
+        return "List of your tracked links:" + response.toString();
     }
 }
