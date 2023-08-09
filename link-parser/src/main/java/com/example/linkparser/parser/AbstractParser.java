@@ -16,11 +16,17 @@ public abstract class AbstractParser {
     }
 
     public @Nullable AbstractAnswer parserManager(@NotNull String url){
+        try {
         String substringUrl = url.substring("https://".length() - 1);
         String[] wordsFromUrl = substringUrl.split("/");
-        String[] nameWebsite = wordsFromUrl[1].split("\\.");
-        if(nameWebsite[0].equals(website.toString())){
-            return getAnswer(wordsFromUrl);
+            String[] nameWebsite = wordsFromUrl[1].split("\\.");
+            if(nameWebsite[0].equals(website.toString())){
+                return getAnswer(wordsFromUrl);
+            }
+        }
+        catch (StringIndexOutOfBoundsException | ArrayIndexOutOfBoundsException ex){
+            System.out.println(ex.getMessage());
+
         }
         return null;
 
