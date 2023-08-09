@@ -13,8 +13,14 @@ public class GithubParser extends AbstractParser{
         super(website);
     }
 
+    private final static int LENGTH_URL = 4;
+
     @Override
     public AbstractAnswer getAnswer(String[] wordsFromUrl) {
-        return new GitHubAnswer(wordsFromUrl[2], wordsFromUrl[3]);
+        String domain = NameWebsite.github + ".com";
+        if(wordsFromUrl[1].matches(domain) && wordsFromUrl.length == LENGTH_URL) {
+            return new GitHubAnswer(wordsFromUrl[2], wordsFromUrl[3]);
+        }
+        return null;
     }
 }

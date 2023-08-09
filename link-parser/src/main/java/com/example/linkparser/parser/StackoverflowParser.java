@@ -15,13 +15,11 @@ public class StackoverflowParser extends AbstractParser{
 
     @Override
     public AbstractAnswer getAnswer(String[] wordsFromUrl) {
-        try {
-        if(wordsFromUrl[3].matches("\\d+")){
+        String domain = NameWebsite.stackoverflow + ".com";
+        if(wordsFromUrl[3].matches("\\d+")
+                && wordsFromUrl[2].matches("questions")
+                && wordsFromUrl[1].matches(domain)){
                 return new StackoverflowAnswer(wordsFromUrl[3]);
-        }
-        }
-        catch (ArrayIndexOutOfBoundsException ex){
-            System.out.println("array out of bounds");
         }
         return null;
     }
