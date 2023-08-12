@@ -3,7 +3,7 @@ version: "3.9"
 services:
   postgresql:
     image: postgres:14
-    container_name: scrapper_postgres
+    container_name: scrapper-postgres
     restart: on-failure
     environment:
       POSTGRES_USER: postgres
@@ -28,12 +28,12 @@ services:
       - postgresql
     command:
       - --hub-mode=off
-        - --changelog-file=master.xml
-        - --driver=org.postgresql.Driver
-        - --url=jdbc:postgresql://postgresql:5432/scrapper
-        - --username=postgres
-        - --password=postgres
-        - update
+      - --changelog-file=master.xml
+      - --driver=org.postgresql.Driver
+      - --url=jdbc:postgresql://postgresql:5432/scrapper
+      - --username=postgres
+      - --password=postgres
+      - update
     volumes:
       - ./migrations:/liquibase/changelog
     networks:
