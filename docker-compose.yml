@@ -8,9 +8,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: scrapper
     ports:
-      - 5433:5432
+      - 5431:5432
     volumes:
       - postgres_data_scapper:/var/lib/postgresql/data
     networks:
@@ -30,7 +30,7 @@ services:
       - --hub-mode=off
       - --changelog-file=master.xml
       - --driver=org.postgresql.Driver
-      - --url=jdbc:postgresql://postgresql:5432/postgres
+      - --url=jdbc:postgresql://postgresql:5432/scrapper
       - --username=postgres
       - --password=postgres
       - update
