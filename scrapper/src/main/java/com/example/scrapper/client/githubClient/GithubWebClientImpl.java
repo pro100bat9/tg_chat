@@ -2,7 +2,6 @@ package com.example.scrapper.client.githubClient;
 
 
 import com.example.scrapper.dto.response.GithubApiResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClient;
 
 public class GithubWebClientImpl implements GithubWebClient {
