@@ -26,13 +26,12 @@ public class JdbcChatRepository {
     }
 
     public boolean removeChat(Long id){
-        int rowsAffected = jdbcTemplate.update(REMOVE_CHAT_QUERY);
+        int rowsAffected = jdbcTemplate.update(REMOVE_CHAT_QUERY, id);
         return rowsAffected > 0;
     }
 
     public List<ChatEntity> findAllChats(){
         return jdbcTemplate.query(FIND_ALL_CHATS_QUERY, chatMapper);
-
 
     }
 
