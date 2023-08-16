@@ -1,6 +1,7 @@
 package com.example.scrapper;
 
 import com.example.scrapper.configuration.ApplicationConfig;
+import com.example.scrapper.repository.JdbcChatRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

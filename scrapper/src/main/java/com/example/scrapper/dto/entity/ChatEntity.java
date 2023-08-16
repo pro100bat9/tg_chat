@@ -1,4 +1,13 @@
 package com.example.scrapper.dto.entity;
 
-public record ChatEntity(Long id) {
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class ChatEntity {
+    private Long id;
 }

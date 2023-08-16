@@ -1,6 +1,5 @@
-package repository;
+package com.example.scrapper.repository;
 
-import com.example.scrapper.dto.entity.ChatEntity;
 import com.example.scrapper.dto.entity.SubscriptionEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -11,11 +10,11 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class jdbcSubscriptionRepository {
+public class JdbcSubscriptionRepository {
     private final JdbcTemplate jdbcTemplate;
     private final BeanPropertyRowMapper<SubscriptionEntity> subscriptionMapper = new BeanPropertyRowMapper<>(SubscriptionEntity.class);
 
-    private final static String ADD_SUBSCRIPTION_QUERY = "insert into subscription (chat_id, link_id) values (?)";
+    private final static String ADD_SUBSCRIPTION_QUERY = "insert into subscription (chat_id, link_id) values (?, ?)";
     private final static String REMOVE_SUBSCRIPTION_QUERY = "delete from subscription where chat_id = ? and link_id = ?";
     private final static String FIND_ALL_SUBSCRIPTIONS_QUERY = "select chat_id, link_id from subscription";
     private final static String COUNT_SUBSCRIPTION_QUERY = """
@@ -24,14 +23,14 @@ public class jdbcSubscriptionRepository {
             where link_id = ?
             """;
 
-    public Boolean addSubscription(Long tgChatId, Long linkChatId){
-        int rowsAffected = jdbcTemplate.update(ADD_SUBSCRIPTION_QUERY, tgChatId, linkChatId);
+    public Boolean addSubscription(Long tgChatId, Long linkId){
+        int rowsAffected = jdbcTemplate.update(ADD_SUBSCRIPTION_QUERY, tgChatId, linkId);
         return rowsAffected > 0;
 
     }
 
-    public Boolean removeSubscription(Long tgChatId, Long linkChatId){
-        int rowsAffected = jdbcTemplate.update(REMOVE_SUBSCRIPTION_QUERY, tgChatId, linkChatId);
+    public Boolean removeSubscription(Long tgChatId, Long linkId){
+        int rowsAffected = jdbcTemplate.update(REMOVE_SUBSCRIPTION_QUERY, tgChatId, linkId);
         return rowsAffected > 0;
     }
 
@@ -39,7 +38,7 @@ public class jdbcSubscriptionRepository {
         return jdbcTemplate.query(FIND_ALL_SUBSCRIPTIONS_QUERY, subscriptionMapper);
     }
 
-    public Integer countSubscription(Long id){
-        return jdbcTemplate.queryForObject(COUNT_SUBSCRIPTION_QUERY, Integer.class, id);
+    public Integer countSubscription(Long linkId){
+        return jdbcTemplate.queryForObject(COUNT_SUBSCRIPTION_QUERY, Integer.class, linkId);
     }
 }

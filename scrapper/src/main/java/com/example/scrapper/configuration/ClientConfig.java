@@ -48,4 +48,5 @@ public class ClientConfig {
     public StackoverflowWebClient stackoverflowWebClient(WebClient webClient, @Value("${stackoverflow.url}") String url){
         return new StackoverflowWebClientImpl(webClient, url);
     }
+
 }

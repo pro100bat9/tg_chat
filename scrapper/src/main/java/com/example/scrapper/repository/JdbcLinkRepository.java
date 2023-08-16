@@ -1,11 +1,14 @@
-package repository;
+package com.example.scrapper.repository;
 
 import com.example.scrapper.dto.entity.LinkEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class JdbcLinkRepository {
     private final JdbcTemplate jdbcTemplate;
     private final BeanPropertyRowMapper<LinkEntity> linkMapper = new BeanPropertyRowMapper<>(LinkEntity.class);
 
-    private final static String ADD_LINK_QUERY = "insert into link (id) values (?)";
+    private final static String ADD_LINK_QUERY = "insert into link (url) values (?)";
 
     private final static String FIND_BY_ID_QUERY = """
             select id, url, last_check_time, updated_at
@@ -30,7 +33,7 @@ public class JdbcLinkRepository {
     private final static String FIND_ALL_QUERY = "select id, url, last_check_time, updated_at from link";
     private final static String FIND_LINKS_FROM_CHAT_QUERY = """
             select id, url, last_check_time, updated_at
-            from link
+            from link 
             join subscription s on link.id = s.link_id
             where chat_id = ?
             """;
@@ -53,8 +56,14 @@ public class JdbcLinkRepository {
             where s.chat_id is NULL)
             """;
 
-    public LinkEntity addLink(){
-        return jdbcTemplate.queryForObject(ADD_LINK_QUERY, linkMapper);
+    public Long addLink(String url){
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement(ADD_LINK_QUERY, new String[] {"id"});
+            ps.setString(1, url);
+            return ps;
+        }, keyHolder);
+        return keyHolder.getKey().longValue();
 
     }
 
@@ -74,7 +83,7 @@ public class JdbcLinkRepository {
     }
 
     public List<LinkEntity> findLinksFromChat(Long id){
-        return jdbcTemplate.query(FIND_LINKS_FROM_CHAT_QUERY, linkMapper);
+        return jdbcTemplate.query(FIND_LINKS_FROM_CHAT_QUERY, linkMapper, id);
 
     }
 

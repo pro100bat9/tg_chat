@@ -1,5 +1,6 @@
 package com.example.scrapper.configuration;
 
+import com.example.scrapper.repository.JdbcChatRepository;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
