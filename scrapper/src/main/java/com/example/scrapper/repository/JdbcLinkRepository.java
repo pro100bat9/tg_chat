@@ -72,8 +72,8 @@ public class JdbcLinkRepository {
 
     }
 
-    public LinkEntity findById(Long id){
-        return jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, linkMapper, id);
+    public LinkEntity findById(Long chatId){
+        return jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, linkMapper, chatId);
 
     }
 
@@ -82,8 +82,8 @@ public class JdbcLinkRepository {
 
     }
 
-    public List<LinkEntity> findLinksFromChat(Long id){
-        return jdbcTemplate.query(FIND_LINKS_FROM_CHAT_QUERY, linkMapper, id);
+    public List<LinkEntity> findLinksFromChat(Long chatId){
+        return jdbcTemplate.query(FIND_LINKS_FROM_CHAT_QUERY, linkMapper, chatId);
 
     }
 
@@ -92,13 +92,13 @@ public class JdbcLinkRepository {
 
     }
 
-    public Boolean updateLastUpdateTime(OffsetDateTime date, Long id){
-        int rowsAffected = jdbcTemplate.update(UPDATE_LAST_UPDATE_TIME_QUERY, date, id);
+    public Boolean updateLastUpdateTime(Long chatId, OffsetDateTime date){
+        int rowsAffected = jdbcTemplate.update(UPDATE_LAST_UPDATE_TIME_QUERY, date, chatId);
         return rowsAffected > 0;
     }
 
-    public Boolean removeById(Long id){
-        int rowsAffected = jdbcTemplate.update(REMOVE_BY_ID_QUERY, id);
+    public Boolean removeById(Long chatId){
+        int rowsAffected = jdbcTemplate.update(REMOVE_BY_ID_QUERY, chatId);
         return rowsAffected > 0;
     }
 
