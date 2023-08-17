@@ -1,5 +1,7 @@
 package com.example.scrapper.configuration;
 
+import com.example.scrapper.client.botClient.BotClient;
+import com.example.scrapper.client.botClient.BotClientImpl;
 import com.example.scrapper.client.githubClient.GithubWebClient;
 import com.example.scrapper.client.githubClient.GithubWebClientImpl;
 import com.example.scrapper.client.stackoverflowClient.StackoverflowWebClient;
@@ -41,12 +43,16 @@ public class ClientConfig {
     @Bean
     public GithubWebClient githubWebClient(WebClient webClient, @Value("${github.url}") String url){
         return new GithubWebClientImpl(webClient, url);
-
     }
 
     @Bean
     public StackoverflowWebClient stackoverflowWebClient(WebClient webClient, @Value("${stackoverflow.url}") String url){
         return new StackoverflowWebClientImpl(webClient, url);
+    }
+
+    @Bean
+    public BotClient botClient(WebClient webClient, @Value("${bot.url.base}") String url){
+        return new BotClientImpl(webClient, url);
     }
 
 }

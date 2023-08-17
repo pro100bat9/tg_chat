@@ -19,13 +19,14 @@ import java.util.List;
 @RestController
 @Validated
 @ScrapperHandler
+@RequestMapping("/links")
 @RequiredArgsConstructor
 public class LinksController {
 
     private final SubscriptionService subscriptionService;
 
     @PostMapping(
-            path = "/links",
+//            path = "/links",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -35,7 +36,7 @@ public class LinksController {
     }
 
     @GetMapping(
-            path = "/links",
+//            path = "/links",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<ListLinksResponse> getLinks(@RequestParam Long id){
@@ -47,7 +48,7 @@ public class LinksController {
     }
 
     @DeleteMapping(
-            path = "/links",
+//            path = "/links",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
