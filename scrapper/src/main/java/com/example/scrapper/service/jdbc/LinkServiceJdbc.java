@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class LinkServiceJdbc implements LinkService {
 
     @Override
     @Transactional
-    public List<LinkEntity> updateLastCheckedTime(OffsetDateTime offsetDateTime) {
-        return jdbcLinkRepository.updateLastTimeCheck(offsetDateTime);
+    public List<LinkEntity> updateLastCheckedTime(Duration offsetDateTime) {
+        return jdbcLinkRepository.updateLastTimeCheck(OffsetDateTime.now().plus(offsetDateTime));
     }
 
     @Override

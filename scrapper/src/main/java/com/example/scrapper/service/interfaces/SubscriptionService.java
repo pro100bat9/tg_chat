@@ -10,4 +10,10 @@ public interface SubscriptionService {
     LinkEntity unSubscribe(Long chatId, String url);
     List<LinkEntity> getLinksFromChat(Long chatId);
     List<ChatEntity> getChatFromLink(Long linkId);
+    default List<Long> getChatId(Long linkId){
+        return getChatFromLink(linkId)
+                .stream()
+                .map(ChatEntity::getId)
+                .toList();
+    }
 }

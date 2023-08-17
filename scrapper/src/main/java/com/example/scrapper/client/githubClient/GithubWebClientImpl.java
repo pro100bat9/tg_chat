@@ -20,10 +20,10 @@ public class GithubWebClientImpl implements GithubWebClient {
     }
 
     @Override
-    public GithubApiResponse fetchRepository(String userName, String repository) {
+    public GithubApiResponse fetchRepository(String username, String repository) {
         return webClient
                 .get()
-                .uri(url + userName + "/" + repository)
+                .uri(url + username + "/" + repository)
                 .retrieve()
                 .bodyToMono(GithubApiResponse.class)
                 .block();
