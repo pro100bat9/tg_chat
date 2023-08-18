@@ -16,12 +16,29 @@ public class GitHubService {
     private final GithubWebClient githubWebClient;
 
     public @Nullable UpdateInfo fetchUpdate(String username, String repository, OffsetDateTime lastUpdateTime){
-        GithubApiResponse githubApiResponses = githubWebClient.fetchRepository(username, repository);
+        List<GithubApiResponse> githubApiResponses = githubWebClient.fetchRepository(username, repository);
 
-        if(githubApiResponses != null && githubApiResponses.updatedAt().isAfter(lastUpdateTime)){
-            return new UpdateInfo(githubApiResponses.updatedAt());
+        if(githubApiResponses.isEmpty()){
+            GithubApiResponse lastEvent = githubApiResponses.get(0);
+            List<String> eventsInfo = githubApiResponses
+                    .stream()
+                    .filter(event -> event.getCreatedAt().isAfter(lastUpdateTime))
+                    .map(event -> getEventType(event.getType()) + " time: " + event.getCreatedAt())
+                    .toList();
+            return new UpdateInfo(lastEvent.getCreatedAt(), eventsInfo);
         }
         return null;
 
     }
+
+    public String getEventType(String event){
+        try{
+            return GitHubType.valueOf(event).getDescription();
+        }
+        catch (IllegalArgumentException ex){
+            return GitHubType.UnknownEvent.getDescription();
+        }
+    }
+
+
 }

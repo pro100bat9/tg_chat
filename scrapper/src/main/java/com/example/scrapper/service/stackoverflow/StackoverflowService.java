@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @RequiredArgsConstructor
 @Service
 public class StackoverflowService {
@@ -17,7 +19,7 @@ public class StackoverflowService {
         StackoverflowApiResponse stackoverflowApiResponse = stackoverflowWebClient.fetchQuestion(id);
         StackoverflowApiResponseItem stackoverflowApiResponseItem = stackoverflowApiResponse.items().get(0);
         if(stackoverflowApiResponseItem != null){
-            return new UpdateInfo(stackoverflowApiResponseItem.lastActivityDate());
+            return new UpdateInfo(stackoverflowApiResponseItem.lastActivityDate(), new ArrayList<>());
         }
         return null;
     }

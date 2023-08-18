@@ -39,7 +39,7 @@ public class UpdateLinkService {
             boolean canSendUpdate = updateInfo != null && (link.getLastCheckTime() == null ||
                     link.getLastCheckTime().isBefore(updateInfo.dateTime()));
             if(canSendUpdate){
-                sendUpdates(link, updateInfo.dateTime());
+                sendUpdates(link, updateInfo);
             }
         });
 
@@ -61,9 +61,9 @@ public class UpdateLinkService {
                 };
     }
 
-    public void sendUpdates(LinkEntity link, OffsetDateTime offsetDateTime){
-        linkService.updateLink(link, offsetDateTime);
-        botClient.updatePosts(new LinkUpdateRequest(link.getId(), link.getUrl().toString(), "updates",
+    public void sendUpdates(LinkEntity link, UpdateInfo updateInfo){
+        linkService.updateLink(link, updateInfo.dateTime());
+        botClient.updatePosts(new LinkUpdateRequest(link.getId(), link.getUrl().toString(), updateInfo.toString(),
                 subscriptionService.getChatId(link.getId())));
     }
 
