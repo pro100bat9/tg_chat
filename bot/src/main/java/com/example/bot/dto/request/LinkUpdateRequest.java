@@ -6,13 +6,13 @@ import jakarta.validation.constraints.Positive;
 
 import java.util.List;
 
-public record LinkUpdate(
+public record LinkUpdateRequest(
         @Positive
-        Integer id,
+        Long id,
         @NotBlank
         String url,
         @NotBlank
         String description,
         @NotNull
-        List<Integer> tgChatIds)
+        List<Long> tgChatIds)
 {}

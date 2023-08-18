@@ -1,5 +1,6 @@
 package com.example.bot.configuration;
 
+import com.example.linkparser.ParserConfig;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +10,7 @@ import org.telegram.telegrambots.starter.TelegramBotStarterConfiguration;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-@Import(TelegramBotStarterConfiguration.class)
+@Import({TelegramBotStarterConfiguration.class, ParserConfig.class})
 public record ApplicationConfig(
         @NotNull String test,
         Bot Bot,

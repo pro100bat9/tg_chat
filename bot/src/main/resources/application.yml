@@ -2,7 +2,7 @@ springdoc:
   swagger-ui:
     path: "swagger-ui"
 server:
-  port: 8080
+  port: 8081
 app:
   test: 1234
   bot:

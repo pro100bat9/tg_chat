@@ -14,3 +14,15 @@ stackoverflow:
   mandatory-request-params: "?order=desc&sort=activity&site=stackoverflow"
 webclient:
   timeout: 1000
+bot:
+  url:
+    base: http://localhost:8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5431/scrapper
+    username: postgres
+    password: postgres
+
+
+

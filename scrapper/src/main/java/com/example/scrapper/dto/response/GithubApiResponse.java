@@ -1,23 +1,28 @@
 package com.example.scrapper.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import java.time.OffsetDateTime;
+import java.util.Map;
 
-public record GithubApiResponse(
-        @JsonProperty("id")
-        long id,
 
-        @JsonProperty("name")
-        String repositoryName,
+@Data
+public class GithubApiResponse {
 
-        @JsonProperty("updated_at")
-        OffsetDateTime updatedAt,
+        @JsonProperty("type")
+        private String type;
 
         @JsonProperty("created_at")
-        OffsetDateTime createdAt,
+        private OffsetDateTime createdAt;
 
-        @JsonProperty("pushed_at")
-        OffsetDateTime pushedAt
-        ) {
+        private String nameRepository;
+
+        @JsonProperty("repo")
+        private void takeNameRepo(Map<String, Object> repo){
+                this.nameRepository = (String) repo.get("name");
+
+        }
+
+
 }

@@ -2,8 +2,11 @@ package com.example.scrapper.client.githubClient;
 
 
 import com.example.scrapper.dto.response.GithubApiResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Collections;
+import java.util.List;
 
 public class GithubWebClientImpl implements GithubWebClient {
     private final WebClient webClient;
@@ -21,12 +24,13 @@ public class GithubWebClientImpl implements GithubWebClient {
     }
 
     @Override
-    public GithubApiResponse fetchRepository(String userName, String repository) {
+    public List<GithubApiResponse> fetchRepository(String username, String repository) {
         return webClient
                 .get()
-                .uri(url + userName + "/" + repository)
+                .uri(url + username + "/" + repository + "/events")
                 .retrieve()
-                .bodyToMono(GithubApiResponse.class)
-                .block();
+                .bodyToMono(new ParameterizedTypeReference<List<GithubApiResponse>>() {})
+                .blockOptional()
+                .orElse(Collections.emptyList());
     }
 }

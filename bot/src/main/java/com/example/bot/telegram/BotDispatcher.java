@@ -1,6 +1,8 @@
 package com.example.bot.telegram;
 
 import com.example.bot.configuration.ApplicationConfig;
+import com.example.bot.dto.request.LinkUpdateRequest;
+import com.example.bot.exception.MessageException;
 import com.example.bot.handler.MessageHandler;
 import com.example.bot.telegram.command.AbstractCommand;
 import com.example.bot.telegram.command.Command;
@@ -43,8 +45,6 @@ public class BotDispatcher extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             System.out.println("happen something wrong" + e.getMessage());
         }
-
-
     }
 
 
@@ -66,4 +66,25 @@ public class BotDispatcher extends TelegramLongPollingBot {
     public String getBotUsername() {
         return applicationConfig.Bot().name();
     }
+
+    public void sendUpdates(LinkUpdateRequest linkUpdateRequest){
+        String message = "New updates from: " + linkUpdateRequest.url() + "\n description: \n" + linkUpdateRequest.description();
+        linkUpdateRequest.tgChatIds().forEach(id -> sendMessage(id, message));
+    }
+
+    public void sendMessage(Long chatId, String message){
+        try {
+            SendMessage sendMessage = SendMessage.builder()
+                    .chatId(chatId)
+                    .text(message)
+                    .build();
+            this.execute(sendMessage);
+        }
+        catch (TelegramApiException ex){
+            throw new MessageException(chatId, ex);
+        }
+
+    }
+
+
 }

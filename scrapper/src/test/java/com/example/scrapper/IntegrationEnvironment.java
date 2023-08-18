@@ -17,7 +17,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class IntegrationEnvironment {
+public abstract class IntegrationEnvironment {
     static final String IMAGE_VERSION = "postgres:14";
     static final PostgreSQLContainer<?> POSTGRES_CONTAINER;
     static final String MASTER_PATH = "master.xml";
