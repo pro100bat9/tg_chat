@@ -1,8 +1,8 @@
 package com.example.scrapper.service.jdbc;
 
 
-import com.example.scrapper.repository.JdbcChatRepository;
-import com.example.scrapper.repository.JdbcLinkRepository;
+import com.example.scrapper.repository.jdbc.JdbcChatRepository;
+import com.example.scrapper.repository.jdbc.JdbcLinkRepository;
 import com.example.scrapper.service.interfaces.ChatService;
 import lombok.RequiredArgsConstructor;
 
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ChatServiceJdbc implements ChatService {
+public class JdbcChatService implements ChatService {
 
     private final JdbcChatRepository jdbcChatRepository;
     private final JdbcLinkRepository jdbcLinkRepository;

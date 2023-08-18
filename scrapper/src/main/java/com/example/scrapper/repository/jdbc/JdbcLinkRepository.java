@@ -1,4 +1,4 @@
-package com.example.scrapper.repository;
+package com.example.scrapper.repository.jdbc;
 
 import com.example.scrapper.dto.entity.LinkEntity;
 import lombok.RequiredArgsConstructor;
@@ -72,8 +72,8 @@ public class JdbcLinkRepository {
 
     }
 
-    public LinkEntity findById(Long chatId){
-        return jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, linkMapper, chatId);
+    public LinkEntity findById(Long linkId){
+        return jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, linkMapper, linkId);
 
     }
 
@@ -97,8 +97,8 @@ public class JdbcLinkRepository {
         return rowsAffected > 0;
     }
 
-    public Boolean removeById(Long chatId){
-        int rowsAffected = jdbcTemplate.update(REMOVE_BY_ID_QUERY, chatId);
+    public Boolean removeById(Long linkId){
+        int rowsAffected = jdbcTemplate.update(REMOVE_BY_ID_QUERY, linkId);
         return rowsAffected > 0;
     }
 

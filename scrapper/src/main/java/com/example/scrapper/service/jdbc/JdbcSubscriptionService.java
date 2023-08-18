@@ -3,9 +3,9 @@ package com.example.scrapper.service.jdbc;
 
 import com.example.scrapper.dto.entity.ChatEntity;
 import com.example.scrapper.dto.entity.LinkEntity;
-import com.example.scrapper.repository.JdbcChatRepository;
-import com.example.scrapper.repository.JdbcLinkRepository;
-import com.example.scrapper.repository.JdbcSubscriptionRepository;
+import com.example.scrapper.repository.jdbc.JdbcChatRepository;
+import com.example.scrapper.repository.jdbc.JdbcLinkRepository;
+import com.example.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 import com.example.scrapper.service.interfaces.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SubscriptionServiceJdbc implements SubscriptionService{
+public class JdbcSubscriptionService implements SubscriptionService{
     private final JdbcChatRepository jdbcChatRepository;
     private final JdbcLinkRepository jdbcLinkRepository;
     private final JdbcSubscriptionRepository jdbcSubscriptionRepository;

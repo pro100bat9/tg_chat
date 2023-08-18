@@ -1,4 +1,4 @@
-package com.example.scrapper.repository;
+package com.example.scrapper.repository.jdbc;
 
 import com.example.scrapper.dto.entity.ChatEntity;
 import lombok.RequiredArgsConstructor;

@@ -3,6 +3,7 @@ package com.example.scrapper.repository;
 import com.example.scrapper.ScrapperApplication;
 import com.example.scrapper.configuration.TestConfiguration;
 import com.example.scrapper.dto.entity.ChatEntity;
+import com.example.scrapper.repository.jdbc.JdbcChatRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
