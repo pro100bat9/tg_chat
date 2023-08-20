@@ -1,7 +1,6 @@
 package com.example.scrapper.repository.jooq;
 
 import com.example.scrapper.domain.jooq.tables.Subscription;
-import com.example.scrapper.domain.jooq.tables.TgChat;
 import com.example.scrapper.dto.entity.SubscriptionEntity;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;

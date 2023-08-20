@@ -6,41 +6,45 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 @RestControllerAdvice(annotations = ScrapperHandler.class)
-public class ScrapperExceptionHandler {
-    private static final String BAD_REQUEST_DESCRIPTION = "Bad request";
-    public static final String BAD_REQUEST_CODE = "400";
-    public static final String NOT_FOUND_DESCRIPTION = "Not found";
-    public static final String NOT_FOUND_CODE = "404";
+public class ScrapperExceptionHandler extends ResponseEntityExceptionHandler {
 
+    public static final String ClIENT_ERROR_RESPONSE = "client";
+    public static final String SERVER_ERROR_RESPONSE = "server";
+    public static final String ClIENT_DESCRIPTION = "wrong client information";
+    public static final String SERVER_DESCRIPTION = "Internal server";
+
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    public ResponseEntity<ApiErrorResponse> clientHandleException(TelegramApiException ex) {
+        return build(ex, HttpStatus.BAD_REQUEST, ClIENT_DESCRIPTION, ClIENT_ERROR_RESPONSE);
+
+    }
     @ExceptionHandler
-    public ResponseEntity<ApiErrorResponse> badRequestHandle(HttpClientErrorException.BadRequest ex){
-        return new ResponseEntity<>(
-                new ApiErrorResponse(
-                        BAD_REQUEST_DESCRIPTION,
-                        BAD_REQUEST_CODE,
-                        ex.getClass().getName(),
-                        ex.getMessage(),
-                        Arrays.stream(ex.getStackTrace()).map(Object::toString).toList()),
-                HttpStatus.BAD_REQUEST
-                );
+    public ResponseEntity<ApiErrorResponse> serverHandleException(TelegramApiException ex) {
+        return build(ex, HttpStatus.INTERNAL_SERVER_ERROR, SERVER_ERROR_RESPONSE, SERVER_DESCRIPTION);
 
     }
 
-    @ExceptionHandler
-    public ResponseEntity<ApiErrorResponse> notFoundHandle(HttpClientErrorException.NotFound ex){
+    private ResponseEntity<ApiErrorResponse> build(Exception ex, HttpStatus httpStatus,
+                                                   String code, String description){
         return new ResponseEntity<>(
                 new ApiErrorResponse(
-                        NOT_FOUND_DESCRIPTION,
-                        NOT_FOUND_CODE,
-                        ex.getClass().getName(),
+                        description,
+                        code,
+                        ex.toString(),
                         ex.getMessage(),
-                        Arrays.stream(ex.getStackTrace()).map(Object::toString).toList()),
-                HttpStatus.NOT_FOUND
+                        Arrays.stream(ex.getStackTrace())
+                                .map(Objects::toString)
+                                .toList()
+                ),
+                httpStatus
         );
+
     }
 }
