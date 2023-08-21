@@ -1,6 +1,6 @@
 package com.example.scrapper.repository.jdbc;
 
-import com.example.scrapper.dto.entity.ChatEntity;
+import com.example.scrapper.dto.model.ChatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +13,7 @@ import java.util.List;
 public class JdbcChatRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    private final BeanPropertyRowMapper<ChatEntity> chatMapper = new BeanPropertyRowMapper<>(ChatEntity.class);
+    private final BeanPropertyRowMapper<ChatDto> chatMapper = new BeanPropertyRowMapper<>(ChatDto.class);
 
     private final static String ADD_CHAT_QUERY = "insert into tg_chat (id) values (?)";
     private final static String REMOVE_CHAT_QUERY = "delete from tg_chat where id = ?";
@@ -36,16 +36,16 @@ public class JdbcChatRepository {
         return rowsAffected > 0;
     }
 
-    public List<ChatEntity> findAllChats(){
+    public List<ChatDto> findAllChats(){
         return jdbcTemplate.query(FIND_ALL_CHATS_QUERY, chatMapper);
 
     }
 
-    public List<ChatEntity> findChatById(Long chatId){
+    public List<ChatDto> findChatById(Long chatId){
         return jdbcTemplate.query(FIND_CHAT_BY_ID_QUERY, chatMapper, chatId);
     }
 
-    public List<ChatEntity> findAllSubscribers(Long linkId){
+    public List<ChatDto> findAllSubscribers(Long linkId){
         return jdbcTemplate.query(FIND_ALL_SUBSCRIBERS_QUERY, chatMapper, linkId);
 
     }

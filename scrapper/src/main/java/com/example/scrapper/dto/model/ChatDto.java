@@ -1,4 +1,4 @@
-package com.example.scrapper.dto.entity;
+package com.example.scrapper.dto.model;
 
 
 import lombok.AllArgsConstructor;
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ChatEntity {
+public class ChatDto {
     private Long id;
 }

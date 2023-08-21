@@ -1,6 +1,6 @@
 package com.example.scrapper.repository.jdbc;
 
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.LinkDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JdbcLinkRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final BeanPropertyRowMapper<LinkEntity> linkMapper = new BeanPropertyRowMapper<>(LinkEntity.class);
+    private final BeanPropertyRowMapper<LinkDto> linkMapper = new BeanPropertyRowMapper<>(LinkDto.class);
 
     private final static String ADD_LINK_QUERY = "insert into link (url) values (?)";
 
@@ -67,27 +67,27 @@ public class JdbcLinkRepository {
 
     }
 
-    public LinkEntity findByUrl(String url){
+    public LinkDto findByUrl(String url){
         return jdbcTemplate.queryForObject(FIND_BY_URL_QUERY, linkMapper, url);
 
     }
 
-    public LinkEntity findById(Long linkId){
+    public LinkDto findById(Long linkId){
         return jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, linkMapper, linkId);
 
     }
 
-    public List<LinkEntity> findAll(){
+    public List<LinkDto> findAll(){
         return jdbcTemplate.query(FIND_ALL_QUERY, linkMapper);
 
     }
 
-    public List<LinkEntity> findLinksFromChat(Long chatId){
+    public List<LinkDto> findLinksFromChat(Long chatId){
         return jdbcTemplate.query(FIND_LINKS_FROM_CHAT_QUERY, linkMapper, chatId);
 
     }
 
-    public List<LinkEntity> updateLastTimeCheck(OffsetDateTime date){
+    public List<LinkDto> updateLastTimeCheck(OffsetDateTime date){
         return jdbcTemplate.query(UPDATE_LAST_TIME_CHECK_QUERY, linkMapper, date);
 
     }

@@ -2,7 +2,7 @@ package com.example.scrapper.repository;
 
 import com.example.scrapper.ScrapperApplication;
 import com.example.scrapper.configuration.TestConfiguration;
-import com.example.scrapper.dto.entity.ChatEntity;
+import com.example.scrapper.dto.model.ChatDto;
 import com.example.scrapper.repository.jdbc.JdbcChatRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class JdbcChatRepositoryTest{
     void add_One(){
         Long id = 1L;
         boolean chat = jdbcChatRepository.addChat(id);
-        List<ChatEntity> chats = getAllChats();
+        List<ChatDto> chats = getAllChats();
         assertTrue(chat);
         assertEquals(chats.size(), 1);
         assertEquals(chats.get(0).getId(), id);
@@ -62,7 +62,7 @@ public class JdbcChatRepositoryTest{
         createChat(id);
 
         boolean remove = jdbcChatRepository.removeChat(id);
-        List<ChatEntity> chatEntities = getAllChats();
+        List<ChatDto> chatEntities = getAllChats();
 
         assertEquals(chatEntities.size(), 0);
         assertTrue(remove);
@@ -83,7 +83,7 @@ public class JdbcChatRepositoryTest{
     @Transactional
     @Rollback
     void getAll_nothing(){
-        List<ChatEntity> chatEntities = jdbcChatRepository.findAllChats();
+        List<ChatDto> chatEntities = jdbcChatRepository.findAllChats();
 
         assertEquals(chatEntities.size(), 0);
     }
@@ -95,7 +95,7 @@ public class JdbcChatRepositoryTest{
         Long id = 1L;
         createChat(id);
 
-        List<ChatEntity> chatEntities = jdbcChatRepository.findAllChats();
+        List<ChatDto> chatEntities = jdbcChatRepository.findAllChats();
 
         assertEquals(chatEntities.size(), 1);
     }
@@ -103,8 +103,8 @@ public class JdbcChatRepositoryTest{
 
 
 
-    private List<ChatEntity> getAllChats(){
-        return jdbcTemplate.query("select * from tg_chat", new BeanPropertyRowMapper<>(ChatEntity.class));
+    private List<ChatDto> getAllChats(){
+        return jdbcTemplate.query("select * from tg_chat", new BeanPropertyRowMapper<>(ChatDto.class));
     }
 
     private void createChat(Long id){

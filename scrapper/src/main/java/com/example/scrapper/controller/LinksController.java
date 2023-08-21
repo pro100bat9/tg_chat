@@ -1,12 +1,11 @@
 package com.example.scrapper.controller;
 
 import com.example.scrapper.annotation.ScrapperHandler;
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.LinkDto;
 import com.example.scrapper.dto.request.AddLinkRequest;
 import com.example.scrapper.dto.request.RemoveLinkRequest;
 import com.example.scrapper.dto.response.LinkResponse;
 import com.example.scrapper.dto.response.ListLinksResponse;
-import com.example.scrapper.service.interfaces.LinkService;
 import com.example.scrapper.service.interfaces.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -31,7 +30,7 @@ public class LinksController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<LinkResponse> addLinks(@RequestParam Long id, @RequestBody AddLinkRequest addLinkRequest){
-        LinkEntity linkEntity = subscriptionService.subscribe(id, addLinkRequest.link());
+        LinkDto linkEntity = subscriptionService.subscribe(id, addLinkRequest.link());
         return ResponseEntity.ok().body(new LinkResponse(linkEntity.getId(), linkEntity.getUrl()));
     }
 
@@ -53,7 +52,7 @@ public class LinksController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<LinkResponse> deleteLinks(@RequestParam Long id, @RequestBody RemoveLinkRequest removeLinkRequest){
-        LinkEntity linkEntity = subscriptionService.unSubscribe(id, removeLinkRequest.url());
+        LinkDto linkEntity = subscriptionService.unSubscribe(id, removeLinkRequest.url());
         return ResponseEntity.ok().body(new LinkResponse(id, linkEntity.getUrl()));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.scrapper.dto.entity;
+package com.example.scrapper.dto.model;
 
 import lombok.Data;
 import org.jetbrains.annotations.Nullable;
@@ -7,7 +7,7 @@ import java.net.URI;
 import java.time.OffsetDateTime;
 
 @Data
-public class LinkEntity {
+public class LinkDto {
     private Long id;
     private URI url;
     private OffsetDateTime lastCheckTime;

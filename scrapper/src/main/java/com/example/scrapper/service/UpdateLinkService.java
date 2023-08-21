@@ -7,7 +7,7 @@ import com.example.linkparser.model.answer.StackoverflowAnswer;
 import com.example.scrapper.client.botClient.BotClient;
 import com.example.scrapper.configuration.ApplicationConfig;
 import com.example.scrapper.dto.UpdateInfo;
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.LinkDto;
 import com.example.scrapper.dto.request.LinkUpdateRequest;
 import com.example.scrapper.service.github.GitHubService;
 import com.example.scrapper.service.interfaces.LinkService;
@@ -44,13 +44,13 @@ public class UpdateLinkService {
 
     }
 
-    public List<LinkEntity> getUncheckedLinks(){
+    public List<LinkDto> getUncheckedLinks(){
         return linkService.updateLastCheckedTime(
                 config.scheduler().interval()
         );
     }
 
-    public @Nullable UpdateInfo fetchUpdate(LinkEntity link){
+    public @Nullable UpdateInfo fetchUpdate(LinkDto link){
         AbstractAnswer abstractAnswer = filterChain.init(link.getUrl().toString());
         return switch (abstractAnswer) {
                     case null -> throw new InternalError("link was null");
@@ -60,7 +60,7 @@ public class UpdateLinkService {
                 };
     }
 
-    public void sendUpdates(LinkEntity link, UpdateInfo updateInfo){
+    public void sendUpdates(LinkDto link, UpdateInfo updateInfo){
         linkService.updateLink(link, updateInfo.dateTime());
         botClient.updatePosts(new LinkUpdateRequest(link.getId(), link.getUrl().toString(), updateInfo.toString(),
                 subscriptionService.getChatId(link.getId())));

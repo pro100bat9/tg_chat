@@ -2,7 +2,7 @@ package com.example.scrapper.repository;
 
 import com.example.scrapper.ScrapperApplication;
 import com.example.scrapper.configuration.TestConfiguration;
-import com.example.scrapper.dto.entity.SubscriptionEntity;
+import com.example.scrapper.dto.model.SubscriptionDto;
 import com.example.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class JdbcSubscriptionTest {
     void findAll_nothing(){
         int size = getAll().size();
 
-        List<SubscriptionEntity> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
+        List<SubscriptionDto> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
 
         assertEquals(size, 0);
         assertEquals(linkEntities.size(), size);
@@ -83,7 +83,7 @@ public class JdbcSubscriptionTest {
         createSubscription(chatId, linkId);
 
         int size = getAll().size();
-        List<SubscriptionEntity> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
+        List<SubscriptionDto> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
 
         assertEquals(size, 1);
         assertEquals(linkEntities.size(), size);
@@ -155,8 +155,8 @@ public class JdbcSubscriptionTest {
 
 
 
-    private List<SubscriptionEntity> getAll(){
-        return jdbcTemplate.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionEntity.class));
+    private List<SubscriptionDto> getAll(){
+        return jdbcTemplate.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionDto.class));
     }
 
     private Long createLink(String url){

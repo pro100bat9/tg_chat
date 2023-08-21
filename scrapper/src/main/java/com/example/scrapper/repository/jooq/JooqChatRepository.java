@@ -3,7 +3,7 @@ package com.example.scrapper.repository.jooq;
 
 import com.example.scrapper.domain.jooq.tables.Subscription;
 import com.example.scrapper.domain.jooq.tables.TgChat;
-import com.example.scrapper.dto.entity.ChatEntity;
+import com.example.scrapper.dto.model.ChatDto;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
@@ -30,26 +30,26 @@ public class JooqChatRepository {
                 .execute();
     }
 
-    public List<ChatEntity> findAllChats(){
+    public List<ChatDto> findAllChats(){
         return dslContext.select(tgChat.ID)
                 .from(tgChat)
-                .fetchInto(ChatEntity.class);
+                .fetchInto(ChatDto.class);
 
     }
 
-    public ChatEntity findChatById(Long chatId){
+    public ChatDto findChatById(Long chatId){
         return dslContext.select(tgChat.ID)
                 .from(tgChat)
-                .fetchOneInto(ChatEntity.class);
+                .fetchOneInto(ChatDto.class);
     }
 
-    public List<ChatEntity> findAllSubscribers(Long linkId){
+    public List<ChatDto> findAllSubscribers(Long linkId){
         return dslContext.select(tgChat.ID)
                 .from(tgChat)
                 .join(subscription)
                 .on(tgChat.ID.eq(subscription.CHAT_ID))
                 .where(subscription.LINK_ID.eq(linkId))
-                .fetchInto(ChatEntity.class);
+                .fetchInto(ChatDto.class);
 
     }
 }

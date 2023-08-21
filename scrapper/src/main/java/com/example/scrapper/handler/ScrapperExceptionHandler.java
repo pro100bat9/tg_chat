@@ -23,12 +23,11 @@ public class ScrapperExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {IllegalArgumentException.class})
     public ResponseEntity<ApiErrorResponse> clientHandleException(TelegramApiException ex) {
         return build(ex, HttpStatus.BAD_REQUEST, ClIENT_DESCRIPTION, ClIENT_ERROR_RESPONSE);
-
     }
+
     @ExceptionHandler
     public ResponseEntity<ApiErrorResponse> serverHandleException(TelegramApiException ex) {
         return build(ex, HttpStatus.INTERNAL_SERVER_ERROR, SERVER_ERROR_RESPONSE, SERVER_DESCRIPTION);
-
     }
 
     private ResponseEntity<ApiErrorResponse> build(Exception ex, HttpStatus httpStatus,
