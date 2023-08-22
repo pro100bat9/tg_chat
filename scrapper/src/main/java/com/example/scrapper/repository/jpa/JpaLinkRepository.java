@@ -2,6 +2,7 @@ package com.example.scrapper.repository.jpa;
 
 import com.example.scrapper.entity.Link;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 @ConditionalOnProperty(prefix = "app", name = "database-type", havingValue = "jpa")
-public interface JpaLinkRepository {
+public interface JpaLinkRepository extends JpaRepository<Link, Long> {
 
     @Query("""
             delete from Link
@@ -23,7 +24,7 @@ public interface JpaLinkRepository {
             where s.chatId is NULL)
            """)
     @Modifying
-    void deleteWithZeroLinks();
+    void deleteWithZeroChats();
 
     @Query(value = """
               update link

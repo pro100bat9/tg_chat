@@ -25,4 +25,7 @@ public class Chat {
     )
     private List<Link> subscription;
 
+    public Chat(Long id) {
+        this.id = id;
+    }
 }
