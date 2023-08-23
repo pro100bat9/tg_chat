@@ -4,14 +4,12 @@ import com.example.scrapper.dto.model.LinkDto;
 import com.example.scrapper.repository.jdbc.JdbcLinkRepository;
 import com.example.scrapper.service.interfaces.LinkService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
     private final JdbcLinkRepository jdbcLinkRepository;

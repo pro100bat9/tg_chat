@@ -2,12 +2,14 @@ package com.example.scrapper.dto.model;
 
 import com.example.scrapper.entity.Link;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
 
 @Data
+@NoArgsConstructor
 public class LinkDto {
     private Long id;
     private String url;

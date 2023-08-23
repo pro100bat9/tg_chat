@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Repository
 @RequiredArgsConstructor
 public class JdbcLinkRepository {
     private final JdbcTemplate jdbcTemplate;

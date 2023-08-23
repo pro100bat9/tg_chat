@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@ConditionalOnProperty(prefix = "app", name = "database-type", havingValue = "jpa")
+@ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jpa")
 public interface JpaLinkRepository extends JpaRepository<Link, Long> {
 
     @Query("""
-            delete from Link
-            where Link.id in
-            (select id from Link
-            left outer join Subscription s on Link.id = s.linkId
+            delete from Link l
+            where l.id in
+            (select l.id from Link l
+            left outer join Subscription s on l.id = s.linkId
             where s.chatId is NULL)
            """)
     @Modifying

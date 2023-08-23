@@ -8,12 +8,10 @@ import com.example.scrapper.repository.jooq.JooqSubscriptionRepository;
 import com.example.scrapper.service.interfaces.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.jooq.exception.DataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JooqSubscriptionService implements SubscriptionService {
     private final JooqChatRepository jooqChatRepository;

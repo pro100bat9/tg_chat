@@ -9,12 +9,10 @@ import com.example.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 import com.example.scrapper.service.interfaces.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcSubscriptionService implements SubscriptionService{
     private final JdbcChatRepository jdbcChatRepository;

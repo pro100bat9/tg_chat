@@ -2,18 +2,16 @@ package com.example.scrapper.service.jpa;
 
 import com.example.scrapper.dto.model.LinkDto;
 import com.example.scrapper.entity.Link;
-import com.example.scrapper.repository.jpa.JpaChatRepository;
 import com.example.scrapper.repository.jpa.JpaLinkRepository;
 import com.example.scrapper.service.interfaces.LinkService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
 public class JpaLinkService implements LinkService {
     private final JpaLinkRepository jpaLinkRepository;
@@ -24,6 +22,7 @@ public class JpaLinkService implements LinkService {
                 .stream()
                 .map(LinkDto::new)
                 .toList();
+//        return null;
     }
 
     @Override

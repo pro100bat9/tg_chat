@@ -11,13 +11,12 @@ import com.example.scrapper.repository.jpa.JpaLinkRepository;
 import com.example.scrapper.repository.jpa.JpaSubscriptionRepository;
 import com.example.scrapper.service.interfaces.SubscriptionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
 public class JpaSubscriptionService implements SubscriptionService {
     private final JpaLinkRepository jpaLinkRepository;

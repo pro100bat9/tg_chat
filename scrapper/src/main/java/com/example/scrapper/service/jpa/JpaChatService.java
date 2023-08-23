@@ -5,10 +5,8 @@ import com.example.scrapper.repository.jpa.JpaChatRepository;
 import com.example.scrapper.repository.jpa.JpaLinkRepository;
 import com.example.scrapper.service.interfaces.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @RequiredArgsConstructor
 public class JpaChatService implements ChatService {
     private final JpaLinkRepository jpaLinkRepository;

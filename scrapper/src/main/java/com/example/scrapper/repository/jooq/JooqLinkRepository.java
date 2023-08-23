@@ -13,7 +13,6 @@ import java.util.List;
 import static org.jooq.impl.DSL.currentOffsetDateTime;
 import static org.jooq.impl.DSL.select;
 
-@Repository
 @RequiredArgsConstructor
 public class JooqLinkRepository {
     private final DSLContext dslContext;

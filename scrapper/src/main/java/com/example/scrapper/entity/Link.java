@@ -32,7 +32,7 @@ public class Link {
     @Column(name = "last_check_time", nullable = false)
     private OffsetDateTime lastCheckTime;
 
-    @Column(name = "update_at", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updateAtTime;
 
     @ManyToMany
