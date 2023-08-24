@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Chat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 

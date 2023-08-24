@@ -14,8 +14,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
 public class JpaLinkRepositoryTest extends IntegrationEnvironment {
@@ -36,13 +38,13 @@ public class JpaLinkRepositoryTest extends IntegrationEnvironment {
     public void save(){
         Link link = makeLink();
 
-        jpaLinkRepository.save(link);
+        jpaLinkRepository.saveAndFlush(link);
 
         Optional<Link> linkFromDb = jpaLinkRepository.findLinkByUrl("testUrl.com");
 
         assertAll(
                 () -> AssertionsForClassTypes.assertThat(linkFromDb).isNotEmpty(),
-                () -> AssertionsForClassTypes.assertThat(link.equals(linkFromDb.get()))
+                () -> assertEquals(link, linkFromDb.get())
         );
     }
 
