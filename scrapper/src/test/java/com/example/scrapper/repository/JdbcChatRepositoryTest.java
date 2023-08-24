@@ -18,8 +18,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
 public class JdbcChatRepositoryTest{
@@ -38,9 +37,14 @@ public class JdbcChatRepositoryTest{
         Long id = 1L;
         boolean chat = jdbcChatRepository.addChat(id);
         List<ChatDto> chats = getAllChats();
-        assertTrue(chat);
-        assertEquals(chats.size(), 1);
-        assertEquals(chats.get(0).getId(), id);
+        assertAll(
+                () ->      assertTrue(chat),
+                () ->  assertEquals(chats.size(), 1),
+                () ->  assertEquals(chats.get(0).getId(), id)
+        );
+//        assertTrue(chat);
+//        assertEquals(chats.size(), 1);
+//        assertEquals(chats.get(0).getId(), id);
     }
 
     @Test
@@ -50,8 +54,9 @@ public class JdbcChatRepositoryTest{
         Long id = 1L;
         boolean firstChat = jdbcChatRepository.addChat(id);
 
-        assertTrue(firstChat);
-        assertThrows(DuplicateKeyException.class, () -> jdbcChatRepository.addChat(id));
+        assertAll(
+                () -> assertTrue(firstChat),
+                () -> assertThrows(DuplicateKeyException.class, () -> jdbcChatRepository.addChat(id)));
     }
 
     @Test
@@ -64,8 +69,10 @@ public class JdbcChatRepositoryTest{
         boolean remove = jdbcChatRepository.removeChat(id);
         List<ChatDto> chatEntities = getAllChats();
 
-        assertEquals(chatEntities.size(), 0);
-        assertTrue(remove);
+        assertAll(
+                () -> assertEquals(chatEntities.size(), 0),
+                () -> assertTrue(remove)
+        );
     }
 
     @Test

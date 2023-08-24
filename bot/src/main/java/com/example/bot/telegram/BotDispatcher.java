@@ -59,7 +59,6 @@ public class BotDispatcher extends TelegramLongPollingBot {
                 System.out.println("happen something wrong" + e.getMessage());
             }
         }
-
     }
 
     @Override

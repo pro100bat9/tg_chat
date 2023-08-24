@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
 public class JdbcLinkRepositoryTest {
@@ -134,8 +135,10 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeByUrl(url);
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before - 1, after);
+        assertAll(
+                () -> assertTrue(remove),
+                () -> assertEquals(before - 1, after)
+        );
     }
 
     @Test
@@ -148,8 +151,10 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeByUrl(url);
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before, after);
+        assertAll(
+                () -> assertFalse(remove),
+                () -> assertEquals(before, after)
+        );
     }
 
     @Test
@@ -163,8 +168,9 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeById(idLink);
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before - 1, after);
+        assertAll(
+                () -> assertTrue(remove),
+                () ->assertEquals(before - 1, after));
     }
 
     @Test
@@ -176,8 +182,9 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeById(id);
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before, after);
+        assertAll(
+                () -> assertFalse(remove),
+                () ->assertEquals(before, after));
     }
 
     @Test
@@ -191,8 +198,9 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeLinkWithZeroChats();
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before - 1, after);
+        assertAll(
+                () -> assertTrue(remove),
+                () -> assertEquals(before - 1, after));
     }
 
     @Test
@@ -209,8 +217,10 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeLinkWithZeroChats();
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before, after);
+        assertAll(
+                () -> assertFalse(remove),
+                () -> assertEquals(before, after)
+        );
     }
 
 

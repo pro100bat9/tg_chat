@@ -21,7 +21,7 @@ public class Link {
     )
     @SequenceGenerator(
             name = "linkIdGen",
-            sequenceName = "link_id_generator",
+            sequenceName = "link_id_sequence",
             initialValue = 1, allocationSize = 1
     )
     @Column(name = "id")

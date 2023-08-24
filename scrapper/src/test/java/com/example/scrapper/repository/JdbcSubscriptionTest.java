@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
 public class JdbcSubscriptionTest {
@@ -42,8 +43,9 @@ public class JdbcSubscriptionTest {
         boolean add = jdbcSubscriptionRepository.addSubscription(chatId, linkId);
         int after = getAll().size();
 
-        assertTrue(add);
-        assertEquals(before + 1, after);
+        assertAll(
+                () -> assertTrue(add),
+                () -> assertEquals(before + 1, after));
     }
 
     @Test
@@ -67,8 +69,9 @@ public class JdbcSubscriptionTest {
 
         List<SubscriptionDto> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
 
-        assertEquals(size, 0);
-        assertEquals(linkEntities.size(), size);
+        assertAll(
+                () -> assertEquals(size, 0),
+                () -> assertEquals(linkEntities.size(), size));
     }
 
 
@@ -85,8 +88,10 @@ public class JdbcSubscriptionTest {
         int size = getAll().size();
         List<SubscriptionDto> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
 
-        assertEquals(size, 1);
-        assertEquals(linkEntities.size(), size);
+        assertAll(
+                () -> assertEquals(size, 1),
+                () -> assertEquals(linkEntities.size(), size)
+        );
     }
 
     @Test
@@ -103,8 +108,9 @@ public class JdbcSubscriptionTest {
         boolean remove = jdbcSubscriptionRepository.removeSubscription(chatId, linkId);
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before-1 , after);
+        assertAll(
+                () -> assertTrue(remove),
+                () -> assertEquals(before-1 , after));
     }
 
 
@@ -120,8 +126,9 @@ public class JdbcSubscriptionTest {
         boolean remove = jdbcSubscriptionRepository.removeSubscription(chatId, linkId);
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before , after);
+        assertAll(
+                () -> assertFalse(remove),
+        () -> assertEquals(before , after));
     }
 
     @Test
