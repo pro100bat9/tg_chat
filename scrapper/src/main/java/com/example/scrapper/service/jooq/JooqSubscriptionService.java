@@ -1,19 +1,17 @@
 package com.example.scrapper.service.jooq;
 
-import com.example.scrapper.dto.entity.ChatEntity;
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.ChatDto;
+import com.example.scrapper.dto.model.LinkDto;
 import com.example.scrapper.repository.jooq.JooqChatRepository;
 import com.example.scrapper.repository.jooq.JooqLinkRepository;
 import com.example.scrapper.repository.jooq.JooqSubscriptionRepository;
 import com.example.scrapper.service.interfaces.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.jooq.exception.DataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JooqSubscriptionService implements SubscriptionService {
     private final JooqChatRepository jooqChatRepository;
@@ -22,9 +20,9 @@ public class JooqSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkEntity subscribe(Long chatId, String url) {
+    public LinkDto subscribe(Long chatId, String url) {
         try{
-            LinkEntity linkEntity = jooqLinkRepository.findByUrl(url);
+            LinkDto linkEntity = jooqLinkRepository.findByUrl(url);
             jooqSubscriptionRepository.addSubscription(chatId, linkEntity.getId());
         }
         catch (DataAccessException ex){
@@ -35,8 +33,8 @@ public class JooqSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkEntity unSubscribe(Long chatId, String url) {
-            LinkEntity link = jooqLinkRepository.findByUrl(url);
+    public LinkDto unSubscribe(Long chatId, String url) {
+            LinkDto link = jooqLinkRepository.findByUrl(url);
             if(link != null){
                 jooqSubscriptionRepository.removeSubscription(chatId, link.getId());
                 Integer count = jooqSubscriptionRepository.countSubscription(link.getId());
@@ -53,13 +51,13 @@ public class JooqSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LinkEntity> getLinksFromChat(Long chatId) {
+    public List<LinkDto> getLinksFromChat(Long chatId) {
         return jooqLinkRepository.findLinksFromChat(chatId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ChatEntity> getChatFromLink(Long linkId) {
+    public List<ChatDto> getChatFromLink(Long linkId) {
         return jooqChatRepository.findAllSubscribers(linkId);
     }
 }

@@ -2,7 +2,7 @@ package com.example.scrapper.repository;
 
 import com.example.scrapper.ScrapperApplication;
 import com.example.scrapper.configuration.TestConfiguration;
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.LinkDto;
 import com.example.scrapper.repository.jdbc.JdbcLinkRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
 public class JdbcLinkRepositoryTest {
@@ -62,7 +63,7 @@ public class JdbcLinkRepositoryTest {
         String url = "https://github.com/pro100bat9/project";
         Long id = createLink(url);
 
-        LinkEntity linkFromDb = jdbcLinkRepository.findById(id);
+        LinkDto linkFromDb = jdbcLinkRepository.findById(id);
 
         assertEquals(id, linkFromDb.getId());
     }
@@ -80,7 +81,7 @@ public class JdbcLinkRepositoryTest {
     @Transactional
     @Rollback
     void find_all_nothing_return(){
-        List<LinkEntity> linkEntities = jdbcLinkRepository.findAll();
+        List<LinkDto> linkEntities = jdbcLinkRepository.findAll();
 
         assertEquals(linkEntities.size(), 0);
     }
@@ -92,7 +93,7 @@ public class JdbcLinkRepositoryTest {
         String url = "https://github.com/pro100bat9/project";
         createLink(url);
 
-        List<LinkEntity> linkEntities = jdbcLinkRepository.findAll();
+        List<LinkDto> linkEntities = jdbcLinkRepository.findAll();
 
         assertEquals(linkEntities.size(), 1);
     }
@@ -107,7 +108,7 @@ public class JdbcLinkRepositoryTest {
         Long idLink = createLink(url);
         createSubscription(id, idLink);
 
-        List<LinkEntity> linkEntities = jdbcLinkRepository.findLinksFromChat(id);
+        List<LinkDto> linkEntities = jdbcLinkRepository.findLinksFromChat(id);
 
         assertEquals(linkEntities.size(), 1);
     }
@@ -118,7 +119,7 @@ public class JdbcLinkRepositoryTest {
     void find_with_chat_subscription_not_exist(){
         Long id = 1L;
 
-        List<LinkEntity> linkEntities = jdbcLinkRepository.findLinksFromChat(id);
+        List<LinkDto> linkEntities = jdbcLinkRepository.findLinksFromChat(id);
 
         assertEquals(linkEntities.size(), 0);
     }
@@ -134,8 +135,10 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeByUrl(url);
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before - 1, after);
+        assertAll(
+                () -> assertTrue(remove),
+                () -> assertEquals(before - 1, after)
+        );
     }
 
     @Test
@@ -148,8 +151,10 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeByUrl(url);
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before, after);
+        assertAll(
+                () -> assertFalse(remove),
+                () -> assertEquals(before, after)
+        );
     }
 
     @Test
@@ -163,8 +168,9 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeById(idLink);
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before - 1, after);
+        assertAll(
+                () -> assertTrue(remove),
+                () ->assertEquals(before - 1, after));
     }
 
     @Test
@@ -176,8 +182,9 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeById(id);
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before, after);
+        assertAll(
+                () -> assertFalse(remove),
+                () ->assertEquals(before, after));
     }
 
     @Test
@@ -191,8 +198,9 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeLinkWithZeroChats();
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before - 1, after);
+        assertAll(
+                () -> assertTrue(remove),
+                () -> assertEquals(before - 1, after));
     }
 
     @Test
@@ -209,8 +217,10 @@ public class JdbcLinkRepositoryTest {
         boolean remove = jdbcLinkRepository.removeLinkWithZeroChats();
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before, after);
+        assertAll(
+                () -> assertFalse(remove),
+                () -> assertEquals(before, after)
+        );
     }
 
 
@@ -220,8 +230,8 @@ public class JdbcLinkRepositoryTest {
 
 
 
-    private List<LinkEntity> getAll(){
-        return jdbcTemplate.query("select * from link", new BeanPropertyRowMapper<>(LinkEntity.class));
+    private List<LinkDto> getAll(){
+        return jdbcTemplate.query("select * from link", new BeanPropertyRowMapper<>(LinkDto.class));
     }
 
     private Long createLink(String url){

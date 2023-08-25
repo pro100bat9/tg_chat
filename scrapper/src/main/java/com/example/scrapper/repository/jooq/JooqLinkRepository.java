@@ -2,7 +2,7 @@ package com.example.scrapper.repository.jooq;
 
 import com.example.scrapper.domain.jooq.tables.Link;
 import com.example.scrapper.domain.jooq.tables.Subscription;
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.LinkDto;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
@@ -13,62 +13,61 @@ import java.util.List;
 import static org.jooq.impl.DSL.currentOffsetDateTime;
 import static org.jooq.impl.DSL.select;
 
-@Repository
 @RequiredArgsConstructor
 public class JooqLinkRepository {
     private final DSLContext dslContext;
     private final Link link = Link.LINK;
     private final Subscription subscription = Subscription.SUBSCRIPTION;
 
-    public LinkEntity addLink(String url){
+    public LinkDto addLink(String url){
        return dslContext.insertInto(link)
                .set(link.URL, url)
                .returning(link.fields())
-               .fetchOneInto(LinkEntity.class);
+               .fetchOneInto(LinkDto.class);
 
     }
 
-    public LinkEntity findByUrl(String url){
+    public LinkDto findByUrl(String url){
         return dslContext.select(link.fields())
                 .from(link)
                 .where(link.URL.eq(url))
-                .fetchOneInto(LinkEntity.class);
+                .fetchOneInto(LinkDto.class);
 
 
     }
 
-    public LinkEntity findById(Long linkId){
+    public LinkDto findById(Long linkId){
         return dslContext.select(link.fields())
                 .from(link)
                 .where(link.ID.eq(linkId))
-                .fetchOneInto(LinkEntity.class);
+                .fetchOneInto(LinkDto.class);
 
     }
 
-    public List<LinkEntity> findAll(){
+    public List<LinkDto> findAll(){
         return dslContext.select(link.fields())
                 .from(link)
-                .fetchInto(LinkEntity.class);
+                .fetchInto(LinkDto.class);
 
     }
 
-    public List<LinkEntity> findLinksFromChat(Long chatId){
+    public List<LinkDto> findLinksFromChat(Long chatId){
         return dslContext.select(link.fields())
                 .from(link)
                 .join(subscription)
                 .on(link.ID.eq(subscription.LINK_ID))
                 .where(subscription.CHAT_ID.eq(chatId))
-                .fetchInto(LinkEntity.class);
+                .fetchInto(LinkDto.class);
 
     }
 
 
-    public List<LinkEntity> updateLastTimeCheck(OffsetDateTime date){
+    public List<LinkDto> updateLastTimeCheck(OffsetDateTime date){
         return dslContext.update(link)
                 .set(link.LAST_CHECK_TIME, currentOffsetDateTime())
                 .where(link.LAST_CHECK_TIME.eq(date))
                 .returning(link.fields())
-                .fetchInto(LinkEntity.class);
+                .fetchInto(LinkDto.class);
 
     }
 

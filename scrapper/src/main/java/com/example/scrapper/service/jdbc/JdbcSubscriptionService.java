@@ -1,20 +1,18 @@
 package com.example.scrapper.service.jdbc;
 
 
-import com.example.scrapper.dto.entity.ChatEntity;
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.ChatDto;
+import com.example.scrapper.dto.model.LinkDto;
 import com.example.scrapper.repository.jdbc.JdbcChatRepository;
 import com.example.scrapper.repository.jdbc.JdbcLinkRepository;
 import com.example.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 import com.example.scrapper.service.interfaces.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcSubscriptionService implements SubscriptionService{
     private final JdbcChatRepository jdbcChatRepository;
@@ -24,9 +22,9 @@ public class JdbcSubscriptionService implements SubscriptionService{
 
     @Override
     @Transactional
-    public LinkEntity subscribe(Long chatId, String url) {
+    public LinkDto subscribe(Long chatId, String url) {
         try{
-            LinkEntity link = jdbcLinkRepository.findByUrl(url);
+            LinkDto link = jdbcLinkRepository.findByUrl(url);
             jdbcSubscriptionRepository.addSubscription(chatId, link.getId());
         }
         catch (EmptyResultDataAccessException ex){
@@ -38,9 +36,9 @@ public class JdbcSubscriptionService implements SubscriptionService{
 
     @Override
     @Transactional
-    public LinkEntity unSubscribe(Long chatId, String url) {
+    public LinkDto unSubscribe(Long chatId, String url) {
         try{
-            LinkEntity link = jdbcLinkRepository.findByUrl(url);
+            LinkDto link = jdbcLinkRepository.findByUrl(url);
             jdbcSubscriptionRepository.removeSubscription(chatId, link.getId());
             Integer countSubscriptions = jdbcSubscriptionRepository.countSubscription(link.getId());
             if(countSubscriptions.equals(0)){
@@ -55,13 +53,13 @@ public class JdbcSubscriptionService implements SubscriptionService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<LinkEntity> getLinksFromChat(Long chatId) {
+    public List<LinkDto> getLinksFromChat(Long chatId) {
         return jdbcLinkRepository.findLinksFromChat(chatId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ChatEntity> getChatFromLink(Long linkId) {
+    public List<ChatDto> getChatFromLink(Long linkId) {
         return jdbcChatRepository.findAllSubscribers(linkId);
     }
 }

@@ -1,14 +1,13 @@
 package com.example.scrapper.repository.jooq;
 
 import com.example.scrapper.domain.jooq.tables.Subscription;
-import com.example.scrapper.dto.entity.SubscriptionEntity;
+import com.example.scrapper.dto.model.SubscriptionDto;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 @RequiredArgsConstructor
 public class JooqSubscriptionRepository {
     private final DSLContext dslContext;
@@ -28,10 +27,10 @@ public class JooqSubscriptionRepository {
 
     }
 
-    public List<SubscriptionEntity> findAllSubscriptions(){
+    public List<SubscriptionDto> findAllSubscriptions(){
         return dslContext.select(subscription.fields())
                 .from(subscription)
-                .fetchInto(SubscriptionEntity.class);
+                .fetchInto(SubscriptionDto.class);
     }
 
     public Integer countSubscription(Long linkId){

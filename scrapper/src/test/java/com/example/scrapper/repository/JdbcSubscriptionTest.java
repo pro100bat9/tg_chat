@@ -2,7 +2,7 @@ package com.example.scrapper.repository;
 
 import com.example.scrapper.ScrapperApplication;
 import com.example.scrapper.configuration.TestConfiguration;
-import com.example.scrapper.dto.entity.SubscriptionEntity;
+import com.example.scrapper.dto.model.SubscriptionDto;
 import com.example.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
 public class JdbcSubscriptionTest {
@@ -42,8 +43,9 @@ public class JdbcSubscriptionTest {
         boolean add = jdbcSubscriptionRepository.addSubscription(chatId, linkId);
         int after = getAll().size();
 
-        assertTrue(add);
-        assertEquals(before + 1, after);
+        assertAll(
+                () -> assertTrue(add),
+                () -> assertEquals(before + 1, after));
     }
 
     @Test
@@ -65,10 +67,11 @@ public class JdbcSubscriptionTest {
     void findAll_nothing(){
         int size = getAll().size();
 
-        List<SubscriptionEntity> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
+        List<SubscriptionDto> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
 
-        assertEquals(size, 0);
-        assertEquals(linkEntities.size(), size);
+        assertAll(
+                () -> assertEquals(size, 0),
+                () -> assertEquals(linkEntities.size(), size));
     }
 
 
@@ -83,10 +86,12 @@ public class JdbcSubscriptionTest {
         createSubscription(chatId, linkId);
 
         int size = getAll().size();
-        List<SubscriptionEntity> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
+        List<SubscriptionDto> linkEntities = jdbcSubscriptionRepository.findAllSubscriptions();
 
-        assertEquals(size, 1);
-        assertEquals(linkEntities.size(), size);
+        assertAll(
+                () -> assertEquals(size, 1),
+                () -> assertEquals(linkEntities.size(), size)
+        );
     }
 
     @Test
@@ -103,8 +108,9 @@ public class JdbcSubscriptionTest {
         boolean remove = jdbcSubscriptionRepository.removeSubscription(chatId, linkId);
         int after = getAll().size();
 
-        assertTrue(remove);
-        assertEquals(before-1 , after);
+        assertAll(
+                () -> assertTrue(remove),
+                () -> assertEquals(before-1 , after));
     }
 
 
@@ -120,8 +126,9 @@ public class JdbcSubscriptionTest {
         boolean remove = jdbcSubscriptionRepository.removeSubscription(chatId, linkId);
         int after = getAll().size();
 
-        assertFalse(remove);
-        assertEquals(before , after);
+        assertAll(
+                () -> assertFalse(remove),
+                () -> assertEquals(before , after));
     }
 
     @Test
@@ -155,8 +162,8 @@ public class JdbcSubscriptionTest {
 
 
 
-    private List<SubscriptionEntity> getAll(){
-        return jdbcTemplate.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionEntity.class));
+    private List<SubscriptionDto> getAll(){
+        return jdbcTemplate.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionDto.class));
     }
 
     private Long createLink(String url){

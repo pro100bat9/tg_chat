@@ -15,9 +15,17 @@ public record ApplicationConfig(
         @NotNull
         String test,
         @NotNull
-        Scheduler scheduler
+        Scheduler scheduler,
+        @NotNull
+        AccessType databaseAccessType
 ) {
 
     public record Scheduler(Duration interval){
+    }
+
+    public enum AccessType {
+        JDBC,
+        JPA,
+        JOOQ
     }
 }

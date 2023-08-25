@@ -2,7 +2,7 @@ package com.example.scrapper.repository;
 
 import com.example.scrapper.ScrapperApplication;
 import com.example.scrapper.configuration.TestConfiguration;
-import com.example.scrapper.dto.entity.ChatEntity;
+import com.example.scrapper.dto.model.ChatDto;
 import com.example.scrapper.repository.jdbc.JdbcChatRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
 public class JdbcChatRepositoryTest{
@@ -37,10 +36,15 @@ public class JdbcChatRepositoryTest{
     void add_One(){
         Long id = 1L;
         boolean chat = jdbcChatRepository.addChat(id);
-        List<ChatEntity> chats = getAllChats();
-        assertTrue(chat);
-        assertEquals(chats.size(), 1);
-        assertEquals(chats.get(0).getId(), id);
+        List<ChatDto> chats = getAllChats();
+        assertAll(
+                () ->      assertTrue(chat),
+                () ->  assertEquals(chats.size(), 1),
+                () ->  assertEquals(chats.get(0).getId(), id)
+        );
+//        assertTrue(chat);
+//        assertEquals(chats.size(), 1);
+//        assertEquals(chats.get(0).getId(), id);
     }
 
     @Test
@@ -50,8 +54,9 @@ public class JdbcChatRepositoryTest{
         Long id = 1L;
         boolean firstChat = jdbcChatRepository.addChat(id);
 
-        assertTrue(firstChat);
-        assertThrows(DuplicateKeyException.class, () -> jdbcChatRepository.addChat(id));
+        assertAll(
+                () -> assertTrue(firstChat),
+                () -> assertThrows(DuplicateKeyException.class, () -> jdbcChatRepository.addChat(id)));
     }
 
     @Test
@@ -62,10 +67,12 @@ public class JdbcChatRepositoryTest{
         createChat(id);
 
         boolean remove = jdbcChatRepository.removeChat(id);
-        List<ChatEntity> chatEntities = getAllChats();
+        List<ChatDto> chatEntities = getAllChats();
 
-        assertEquals(chatEntities.size(), 0);
-        assertTrue(remove);
+        assertAll(
+                () -> assertEquals(chatEntities.size(), 0),
+                () -> assertTrue(remove)
+        );
     }
 
     @Test
@@ -83,7 +90,7 @@ public class JdbcChatRepositoryTest{
     @Transactional
     @Rollback
     void getAll_nothing(){
-        List<ChatEntity> chatEntities = jdbcChatRepository.findAllChats();
+        List<ChatDto> chatEntities = jdbcChatRepository.findAllChats();
 
         assertEquals(chatEntities.size(), 0);
     }
@@ -95,7 +102,7 @@ public class JdbcChatRepositoryTest{
         Long id = 1L;
         createChat(id);
 
-        List<ChatEntity> chatEntities = jdbcChatRepository.findAllChats();
+        List<ChatDto> chatEntities = jdbcChatRepository.findAllChats();
 
         assertEquals(chatEntities.size(), 1);
     }
@@ -103,8 +110,8 @@ public class JdbcChatRepositoryTest{
 
 
 
-    private List<ChatEntity> getAllChats(){
-        return jdbcTemplate.query("select * from tg_chat", new BeanPropertyRowMapper<>(ChatEntity.class));
+    private List<ChatDto> getAllChats(){
+        return jdbcTemplate.query("select * from tg_chat", new BeanPropertyRowMapper<>(ChatDto.class));
     }
 
     private void createChat(Long id){

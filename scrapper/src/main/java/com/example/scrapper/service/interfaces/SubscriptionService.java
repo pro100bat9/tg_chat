@@ -1,19 +1,19 @@
 package com.example.scrapper.service.interfaces;
 
-import com.example.scrapper.dto.entity.ChatEntity;
-import com.example.scrapper.dto.entity.LinkEntity;
+import com.example.scrapper.dto.model.ChatDto;
+import com.example.scrapper.dto.model.LinkDto;
 
 import java.util.List;
 
 public interface SubscriptionService {
-    LinkEntity subscribe(Long chatId, String url);
-    LinkEntity unSubscribe(Long chatId, String url);
-    List<LinkEntity> getLinksFromChat(Long chatId);
-    List<ChatEntity> getChatFromLink(Long linkId);
+    LinkDto subscribe(Long chatId, String url);
+    LinkDto unSubscribe(Long chatId, String url);
+    List<LinkDto> getLinksFromChat(Long chatId);
+    List<ChatDto> getChatFromLink(Long linkId);
     default List<Long> getChatId(Long linkId){
         return getChatFromLink(linkId)
                 .stream()
-                .map(ChatEntity::getId)
+                .map(ChatDto::getId)
                 .toList();
     }
 }
