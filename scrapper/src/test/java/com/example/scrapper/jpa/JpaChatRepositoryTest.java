@@ -49,13 +49,13 @@ public class JpaChatRepositoryTest extends IntegrationEnvironment {
     @Rollback
     @Sql("/sql/add_chat.sql")
     public void remove(){
-        Optional<Chat> linkFromDbBefore = jpaChatRepository.findById(1L);
-        jpaChatRepository.delete(linkFromDbBefore.get());
-        Optional<Chat> linkFromDbAfter = jpaChatRepository.findById(1L);
+        Optional<Chat> chatFromDbBefore = jpaChatRepository.findById(1L);
+        jpaChatRepository.delete(chatFromDbBefore.get());
+        Optional<Chat> chatFromDbAfter = jpaChatRepository.findById(1L);
 
         assertAll(
-                () -> AssertionsForClassTypes.assertThat(linkFromDbBefore).isNotEmpty(),
-                () -> AssertionsForClassTypes.assertThat(linkFromDbAfter).isEmpty()
+                () -> AssertionsForClassTypes.assertThat(chatFromDbBefore).isNotEmpty(),
+                () -> AssertionsForClassTypes.assertThat(chatFromDbAfter).isEmpty()
         );
     }
 

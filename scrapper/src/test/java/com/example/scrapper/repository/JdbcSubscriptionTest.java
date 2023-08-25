@@ -128,7 +128,7 @@ public class JdbcSubscriptionTest {
 
         assertAll(
                 () -> assertFalse(remove),
-        () -> assertEquals(before , after));
+                () -> assertEquals(before , after));
     }
 
     @Test
