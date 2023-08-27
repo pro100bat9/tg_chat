@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationConfig.class)
 @EnableScheduling
-//@ComponentScan(basePackages = {"com.example.linkparser", "com.example.scrapper"})
 public class ScrapperApplication {
 
     public static void main(String[] args) {
