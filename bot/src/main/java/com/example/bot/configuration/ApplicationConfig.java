@@ -14,7 +14,9 @@ import org.telegram.telegrambots.starter.TelegramBotStarterConfiguration;
 public record ApplicationConfig(
         @NotNull String test,
         Bot Bot,
-        Client client
+        Client client,
+        @NotNull
+        RabbitQueue rabbitQueue
 ) {
 
     @Validated
@@ -24,6 +26,17 @@ public record ApplicationConfig(
     @Validated
     public record Client(@NotBlank String baseUrl){
 
+    }
+
+    @Validated
+    public record RabbitQueue(
+            @NotBlank
+            String exchangeName,
+            @NotBlank
+            String queueName,
+            @NotBlank
+            String routingKey
+    ){
     }
 
 }
