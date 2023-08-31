@@ -22,7 +22,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
+@SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class}, properties = {"app.database-access-type=jdbc"})
 public class JdbcLinkRepositoryTest {
 
     @Autowired

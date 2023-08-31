@@ -8,6 +8,11 @@ app:
   scheduler:
     interval: 10000
   databaseAccessType: "jpa"
+  use-queue: true
+  rabbit-queue:
+    exchange-name: scrapper-bot-exchange
+    queue-name: scrapper-bot-queue
+    routing-key: scrapper-bot-key
 github:
   url: "https://api.github.com/repos/"
 stackoverflow:
@@ -24,6 +29,11 @@ spring:
     url: jdbc:postgresql://localhost:5431/scrapper
     username: postgres
     password: postgres
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 
 

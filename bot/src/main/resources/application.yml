@@ -10,5 +10,16 @@ app:
     token: ${TELEGRAM_TOKEN}
   client:
     baseUrl: "http://localhost:8080/"
+  rabbit-queue:
+    exchange-name: scrapper-bot-exchange
+    queue-name: scrapper-bot-queue
+    routing-key: scrapper-bot-key
 webclient:
   timeout: 1000
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
