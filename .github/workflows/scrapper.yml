@@ -31,7 +31,7 @@ jobs:
         run: mvn package -pl scrapper-jooq -am
 
       - name: Generate JOOQ
-        run: java -jar scrapper-jooq/target/scrapper-jooq-1.0-SNAPSHOT.jar
+        run: java -jar scrapper-jooq/target/*.jar
 
       - name: Build Jar
         run: mvn package -pl scrapper -am
