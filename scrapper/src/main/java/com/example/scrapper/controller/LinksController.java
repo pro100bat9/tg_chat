@@ -25,7 +25,6 @@ public class LinksController {
     private final SubscriptionService subscriptionService;
 
     @PostMapping(
-//            path = "/links",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
@@ -35,7 +34,6 @@ public class LinksController {
     }
 
     @GetMapping(
-//            path = "/links",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<ListLinksResponse> getLinks(@RequestParam Long id){
@@ -47,7 +45,6 @@ public class LinksController {
     }
 
     @DeleteMapping(
-//            path = "/links",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )

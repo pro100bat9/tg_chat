@@ -1,6 +1,7 @@
 package com.example.scrapper.repository.jpa;
 
 import com.example.scrapper.entity.Link;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -36,4 +37,7 @@ public interface JpaLinkRepository extends JpaRepository<Link, Long> {
     List<Link> updateLastTimeCheck(@Param("time") OffsetDateTime date);
 
     Optional<Link> findLinkByUrl(String url);
+
+    @Query("select l from Link l left join fetch l.subscription where l.id = :id")
+    Optional<Link> findById(@Param("id") @NotNull Long id);
 }

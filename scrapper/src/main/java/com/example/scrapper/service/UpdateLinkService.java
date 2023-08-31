@@ -12,6 +12,7 @@ import com.example.scrapper.dto.request.LinkUpdateRequest;
 import com.example.scrapper.service.github.GitHubService;
 import com.example.scrapper.service.interfaces.LinkService;
 import com.example.scrapper.service.interfaces.SubscriptionService;
+import com.example.scrapper.service.sender.SenderService;
 import com.example.scrapper.service.stackoverflow.StackoverflowService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Nullable;
@@ -27,8 +28,8 @@ public class UpdateLinkService {
     private final StackoverflowService stackoverflowService;
     private final LinkService linkService;
     private final FilterChainInit filterChain;
-    private final BotClient botClient;
     private final SubscriptionService subscriptionService;
+    private final SenderService senderService;
 
 
     public void updateLinks(){
@@ -62,11 +63,7 @@ public class UpdateLinkService {
 
     public void sendUpdates(LinkDto link, UpdateInfo updateInfo){
         linkService.updateLink(link, updateInfo.dateTime());
-        botClient.updatePosts(new LinkUpdateRequest(link.getId(), link.getUrl().toString(), updateInfo.toString(),
+        senderService.sendUpdate(new LinkUpdateRequest(link.getId(), link.getUrl(), updateInfo.toString(),
                 subscriptionService.getChatId(link.getId())));
     }
-
-
-
-
 }

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class})
+@SpringBootTest(classes = {ScrapperApplication.class, TestConfiguration.class}, properties = {"app.database-access-type=jdbc"})
 public class JdbcChatRepositoryTest{
 
 
@@ -42,9 +42,6 @@ public class JdbcChatRepositoryTest{
                 () ->  assertEquals(chats.size(), 1),
                 () ->  assertEquals(chats.get(0).getId(), id)
         );
-//        assertTrue(chat);
-//        assertEquals(chats.size(), 1);
-//        assertEquals(chats.get(0).getId(), id);
     }
 
     @Test

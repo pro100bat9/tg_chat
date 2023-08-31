@@ -22,7 +22,6 @@ public class JpaLinkService implements LinkService {
                 .stream()
                 .map(LinkDto::new)
                 .toList();
-//        return null;
     }
 
     @Override
