@@ -5,8 +5,8 @@ COPY . .
 RUN mvn clean package
 
 FROM openjdk:17.0.2-jdk
-ARG JAR_FILE=target/*.jar
+
 WORKDIR /java
-COPY ${JAR_FILE} app.jar
+COPY --from=build /build/target/*.jar /java/java.jar
 
 CMD ["java", "-jar", "/java/java.jar"]
