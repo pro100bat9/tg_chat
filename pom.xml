@@ -18,7 +18,7 @@
         <java.version>17</java.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <spring-boot.version>3.0.1</spring-boot.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <testcontainers.version>1.17.6</testcontainers.version>
     </properties>
 
@@ -118,6 +118,18 @@
                         <release>17</release>
                         <parameters>true</parameters>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.2.2</version>
+                    <configuration>
+                        <configLocation>checkstyle.xml</configLocation>
+                        <excludes>**/domain/jooq/**</excludes>
+                    </configuration>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
                 </plugin>
             </plugins>
         </pluginManagement>
