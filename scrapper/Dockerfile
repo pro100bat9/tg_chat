@@ -4,7 +4,7 @@ WORKDIR /build
 COPY . .
 RUN mvn clean package
 
-FROM openjdk:18.0.2-jdk
+FROM openjdk:17.0.2-jdk
 
 WORKDIR /java
 COPY --from=build /build/target/*.jar /java/java.jar
