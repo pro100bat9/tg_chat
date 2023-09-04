@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.example</groupId>
         <artifactId>project</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>link-parser</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>link-parser</name>
     <description>link-parser</description>
     <properties>
