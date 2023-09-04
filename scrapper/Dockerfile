@@ -7,6 +7,6 @@ RUN mvn clean package
 FROM openjdk:17.0.2-jdk
 
 WORKDIR /java
-COPY --from=build /build/target/*.jar /java/java.jar
+COPY --from=build scrapper/target/*.jar /java/java.jar
 
 CMD ["java", "-jar", "/java/java.jar"]
