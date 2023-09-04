@@ -30,16 +30,16 @@ jobs:
         run: mvn package -pl bot -am
 
       - name: Build Image
-        run: docker build -t ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }} . -f bot/Dockerfile
+        run: cd project && docker build --file scrapper.Dockerfile -t ghcr.io/pro100bat9/scrapper:latest .
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        run: docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}
+        run: docker push ghcr.io/pro100bat9/scrapper:latest
   checkstyle:
     runs-on: ubuntu-latest
     steps:
