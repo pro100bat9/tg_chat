@@ -1,5 +1,5 @@
-FROM openjdk:17
-
-COPY scrapper/target/scrapper-0.0.1-SNAPSHOT.jar app.jar
-
-ENTRYPOINT exec java -jar /app.jar
+FROM openjdk:17.0.2-jdk-slim
+ARG JAR_FILE=target/*.jar
+WORKDIR /app
+COPY ${JAR_FILE} app.jar
+CMD ["java", "-jar", "/app/app.jar"]
