@@ -21,11 +21,11 @@ public class BotExceptionHandler extends ResponseEntityExceptionHandler {
     public static final String TG_API_DESCRIPTION = "Error with sending message";
     public static final String SERVER_DESCRIPTION = "Internal server";
 
-    @ExceptionHandler(value = {TelegramApiException.class})
-    public ResponseEntity<ApiErrorResponse> telegramApiHandleException(TelegramApiException ex) {
-        return build(ex, HttpStatus.BAD_REQUEST, TG_API_DESCRIPTION, TG_API_ERROR_RESPONSE);
-
-    }
+//    @ExceptionHandler(value = {TelegramApiException.class})
+//    public ResponseEntity<ApiErrorResponse> telegramApiHandleException(TelegramApiException ex) {
+//        return build(ex, HttpStatus.BAD_REQUEST, TG_API_DESCRIPTION, TG_API_ERROR_RESPONSE);
+//
+//    }
     @ExceptionHandler
     public ResponseEntity<ApiErrorResponse> serverHandleException(TelegramApiException ex) {
         return build(ex, HttpStatus.INTERNAL_SERVER_ERROR, SERVER_ERROR_RESPONSE, SERVER_DESCRIPTION);

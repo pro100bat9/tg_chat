@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.validation.annotation.Validated;
 import org.telegram.telegrambots.starter.TelegramBotStarterConfiguration;
 
+//TODO добавить use queue
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 @Import({TelegramBotStarterConfiguration.class, ParserConfig.class})

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@ConditionalOnProperty(prefix = "app", name = "use-queue")
+@ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "true")
 public class RabbitMQConfig {
     private final String exchangeName;
     private final String queueName;
