@@ -2,7 +2,7 @@ FROM maven:3.8.3-openjdk-17 AS build
 
 WORKDIR /build
 COPY . .
-RUN mvn clean package
+RUN mvn clean install
 
 FROM openjdk:17.0.2-jdk
 
