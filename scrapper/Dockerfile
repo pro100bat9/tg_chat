@@ -5,7 +5,7 @@ COPY . .
 RUN mvn clean install
 
 FROM openjdk:17.0.2-jdk
-
+RUN ls -l /build/target/
 WORKDIR /java
 COPY --from=build /build/target/*.jar /java/java.jar
 
