@@ -1,12 +1,5 @@
-FROM maven:3.8.3-openjdk-17 AS build
+FROM openjdk:17
 
-WORKDIR /build
-COPY . .
-RUN mvn clean package
+COPY scrapper/target/scrapper-0.0.1-SNAPSHOT.jar app.jar
 
-FROM openjdk:17.0.2-jdk
-
-WORKDIR /java
-COPY --from=build /build/target/*.jar /java/java.jar
-
-CMD ["java", "-jar", "/java/java.jar"]
+ENTRYPOINT exec java -jar /app.jar
