@@ -29,6 +29,13 @@ jobs:
       - name: Build Jar
         run: mvn package -pl bot -am
 
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: bot/target/bot-0.0.1-SNAPSHOT.jar
+          name: bot.jar
+          retention-days: 1
+
       - name: Build Image
         run: docker build -t ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }} . -f bot/Dockerfile
 
