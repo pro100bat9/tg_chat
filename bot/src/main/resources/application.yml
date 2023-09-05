@@ -7,7 +7,7 @@ app:
   test: 1234
   bot:
     name: "first_bot"
-    token: ${TELEGRAM_TOKEN}
+    token: ${env.TOKEN}
   client:
     baseUrl: "http://localhost:8080/"
   rabbit-queue:
